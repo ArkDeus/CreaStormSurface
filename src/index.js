@@ -26,12 +26,15 @@ tuioManager.start();
 /** App Code **/
 var socketURL = 'http://localhost:8080/';
 const socketIOClient = io(socketURL+'SurfaceService');
+var imageWidgets = [];
+const tagListWidget = new TagListWidget(0,0,1920,1080);
+var _URL = window.URL || window.webkitURL;
+
 
 const buildApp = () => {
-  const tagListWidget = new TagListWidget(0,0,1920,1080);
     $('body').append(tagListWidget.domElem);
-    const imageWidget = new ImageWidget(0, 0, 250, 333, 'assets/IMG_20150304_201145.jpg');
-    $('body').append(imageWidget.domElem);
+    //const imageWidget = new ImageWidget(0, 0, 250, 333, 'assets/IMG_20150304_201145.jpg');
+    //$('body').append(imageWidget.domElem);
     var projects = document.getElementById("projectSelector");
   socketIOClient.emit('getProjectList');
   socketIOClient.on('returnProjectList', function (projectList) {
@@ -44,7 +47,7 @@ const buildApp = () => {
       var clone = document.importNode(t.content, true);
       projects.appendChild(clone);
       var child = projects.querySelectorAll('div')[i];
-      child.setAttribute('onclick','displayImages(\"'+projectList[i][0]+'\")');
+      child.setAttribute('onclick','loadProject(\"'+projectList[i][0]+'\")');
       console.log(child);
     }
   });
@@ -57,9 +60,11 @@ $(window).ready(() => {
 });
 
 
-function displayImages(projectName) {
+function loadProject(projectName) {
     var projects = document.getElementById("projectSelector");
     projects.innerHTML = "";
+    var title = document.getElementById("title");
+    title.innerHTML="";
     var workbench = document.getElementById("workbench");
     workbench.innerHTML = "";
     console.log(projectName);
@@ -67,13 +72,16 @@ function displayImages(projectName) {
     socketIOClient.on("returnAllImages", function (images) {
         console.log(images);
         for (var i = 0; i < images.length; i++) {
+            var _URL = window.URL || window.webkitURL;
             workbench.innerHTML += "<img src='"+socketURL+"Projects/" + projectName + "/" + images[i] + "'/>";
+            var imgsrc = socketURL+"Projects/" + projectName + "/" + images[i];
+
         }
         for (var i = 0; i < workbench.children.length; i++) {
             var image = workbench.children[i];
             image.style.position = "absolute";
-            var top = Math.floor(Math.random() * (1000 - 10 + 1)) + 10;
-            var left = Math.floor(Math.random() * (1900 - 10 + 1)) + 10;
+            var top = Math.floor(Math.random() * (1000 - 10 + 1-500)) + 10;
+            var left = Math.floor(Math.random() * (1900 - 10 + 1-500)) + 10;
             var rotation = Math.floor(Math.random() * (360 + 1));
             image.style.top = top + "px";
             image.style.left = left + "px";
@@ -83,4 +91,4 @@ function displayImages(projectName) {
     });
 }
 
-window.displayImages = displayImages;
+window.loadProject = loadProject;

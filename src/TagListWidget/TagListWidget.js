@@ -32,7 +32,7 @@ class TagListWidget extends TUIOWidget {
 
         this._lastTagsValues = {};
 
-        this._domElem=$('<ul><li class="selected">tag1</li><li>tag2</li><li>tag3</li><li>tag4</li></ul>');
+        this._domElem=$();
         this._domElem.css('position', 'absolute');
         this._domElem.css('left', `${x}px`);
         this._domElem.css('top', `${y}px`);
