@@ -1,0 +1,51 @@
+body{
+    background-color: #5f9a93;
+    color: #1b362f;
+}
+
+img{
+    width:500px;
+}
+
+h1{
+    color: #5f9a93;
+    background-color: rgba(15,82,87,1);
+    margin-top: 0;
+}
+.project{
+    display:inline-block;
+    padding:10px;
+    margin:10px;
+    background-color:rgba(15,82,87,1);
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px #2F4C49;
+}
+
+.project p {
+    text-align: center;
+    font-size:30px;
+    color:#5f9a93;
+}
+.project img{
+    width:300px;
+}
+
+.project:hover{
+    background-color: #2f4b48;
+    box-shadow: 5px 5px 5px #2F4C49;
+    zoom: 110%;
+}
+
+.project:hover p{
+    color:#9a5559;
+}
+
+li{
+    list-style: none;
+    font-size:2em;
+}
+
+.selected{
+    color: #5f9a93;
+    background-color: #1b362f;
+}
