@@ -1,6 +1,7 @@
 /**
- * @author Christian Brel <ch.brel@gmail.com>
+ * Created by user on 09/02/2017.
  */
+
 
 // Import JQuery
 import $ from 'jquery/dist/jquery.min';
@@ -20,7 +21,7 @@ var mathjs = require('mathjs');
  * @class ImageWidget
  * @extends TUIOWidget
  */
-class ImageWidget extends TUIOWidget {
+class AudioWidget extends TUIOWidget {
     /**
      * ImageWidget constructor.
      *
@@ -38,8 +39,9 @@ class ImageWidget extends TUIOWidget {
 
         this._projectTags = projectTags;
 
-        this._domElem = $('<img>');
+        this._domElem = $('<audio>');
         this._domElem.attr('src', imgSrc);
+        this._domElem.attr('controls', 'controls');
         this._domElem.css('width', `${width}px`);
         this._domElem.css('height', `${height}px`);
         this._domElem.css('position', 'absolute');
@@ -51,8 +53,8 @@ class ImageWidget extends TUIOWidget {
         this._lastTouchValue = {};
         this._firstTouchValue = {};
         this._initialDistance = 0;
-		this._angle = angle;
-		this._initialAngle = 0;
+        this._angle = angle;
+        this._initialAngle = 0;
     }
 
     /**
@@ -85,29 +87,29 @@ class ImageWidget extends TUIOWidget {
 
             if(this._touchNb == 1){
                 this._firstTouchValue = this._lastTouchesValues[tuioTouch.id];
-				console.log('touchCreation1');
+                console.log('touchCreation1');
 
 
             }
             if(this._touchNb == 2){
                 this._initialDistance = Math.sqrt(Math.pow(tuioTouch.y-this._firstTouchValue.y,2)+Math.pow(tuioTouch.x-this._firstTouchValue.x,2));
-				this._initialAngle = Math.atan2(tuioTouch.y - this._firstTouchValue.y,
+                this._initialAngle = Math.atan2(tuioTouch.y - this._firstTouchValue.y,
                         tuioTouch.x - this._firstTouchValue.x) * 180 / Math.PI;
-						console.log('touchCreation2');
+                console.log('touchCreation2');
             }
-            
+
         }
     }
 
     onTouchDeletion(tuioTouch) {
         super.onTagDeletion(tuioTouch);
         this._touchNb -= 1;
-		if(this._touchNb <= 0){
-			this._touchNb = 0;
-		}
-		this._initialAngle = 0;
-		this._initialDistance = 0;
-		console.log(this._touchNb);
+        if(this._touchNb <= 0){
+            this._touchNb = 0;
+        }
+        this._initialAngle = 0;
+        this._initialDistance = 0;
+        console.log(this._touchNb);
     }
 
     /**
@@ -161,16 +163,16 @@ class ImageWidget extends TUIOWidget {
                 this._angle = Math.atan2(this._lastTouchValue.y - currentTouchValue.y,
                         this._lastTouchValue.x - currentTouchValue.x) * 180 / Math.PI + this._angle + 180;
 
-				var rotation = Math.atan2(this._lastTouchValue.y - currentTouchValue.y,
+                var rotation = Math.atan2(this._lastTouchValue.y - currentTouchValue.y,
                         this._lastTouchValue.x - currentTouchValue.x) * 180 / Math.PI + this._initialAngle + 180;
-						
+
                 var ratio = Math.sqrt(Math.pow(tuioTouch.y-this._lastTouchValue.y,2)+Math.pow(tuioTouch.x-this._lastTouchValue.x,2))/this._initialDistance;
 
                 this.rotateResize(rotation, ratio);
-				
-				console.log(ratio);
-				console.log(this._width);
-				console.log(this._height);
+
+                console.log(ratio);
+                console.log(this._width);
+                console.log(this._height);
 
                 this._lastTouchesValues = {
                     ...this._lastTouchesValues,
@@ -211,7 +213,7 @@ class ImageWidget extends TUIOWidget {
      */
     onTagUpdate(tuioTag) {
         if (typeof (this._lastTagsValues[tuioTag.id]) !== 'undefined') {
-            
+
         }
     }
 
@@ -233,9 +235,9 @@ class ImageWidget extends TUIOWidget {
         }
     }
     rotateResize(rotation, ratio){
-		this._domElem.css('transform', `scale(${ratio},${ratio}) rotate(${rotation}deg)`);
-		this._width = this._width*ratio;
-		this._height = this._height*ratio;
+        this._domElem.css('transform', `scale(${ratio},${ratio}) rotate(${rotation}deg)`);
+        this._width = this._width*ratio;
+        this._height = this._height*ratio;
     }
     resize(ratio){
         this._domElem.css('transform', `scale(${ratio},${ratio})`);
@@ -263,12 +265,12 @@ class ImageWidget extends TUIOWidget {
 
 
         return (0 < mathjs.dot([x-x1,y-y1],[x2-x1,y2-y1])
-            && mathjs.dot([x-x1,y-y1],[x2-x1,y2-y1]) < mathjs.dot([x2-x1,y2-y1],[x2-x1,y2-y1])
-            && 0 < mathjs.dot([x-x1,y-y1],[x4-x1,y4-y1])
-            && mathjs.dot([x-x1,y-y1],[x4-x1,y4-y1]) < mathjs.dot([x4-x1,y4-y1],[x4-x1,y4-y1]));
+        && mathjs.dot([x-x1,y-y1],[x2-x1,y2-y1]) < mathjs.dot([x2-x1,y2-y1],[x2-x1,y2-y1])
+        && 0 < mathjs.dot([x-x1,y-y1],[x4-x1,y4-y1])
+        && mathjs.dot([x-x1,y-y1],[x4-x1,y4-y1]) < mathjs.dot([x4-x1,y4-y1],[x4-x1,y4-y1]));
 
         //return (x >= this._x && x <= this._x + newWidth && y >= this._y && y <= this._y + newHeight);
     }
 }
 
-export default ImageWidget;
+export default AudioWidget;

@@ -1,6 +1,9 @@
 body{
-    background-color: #5f9a93;
-    color: #1b362f;
+    background-color: #0b3142;
+    color: #fff;
+    width: 1920px;
+    height: 1080px;
+    font-family: 'Raleway', sans-serif;
 }
 
 img{
@@ -8,36 +11,42 @@ img{
 }
 
 h1{
-    color: #5f9a93;
+    color: #fff;
+    font-size: 18px;
+    font-weight: normal;
     background-color: rgba(15,82,87,1);
     margin-top: 0;
+    font-family: 'Raleway', sans-serif;
+    padding: 15px;
 }
 .project{
     display:inline-block;
     padding:10px;
     margin:10px;
-    background-color:rgba(15,82,87,1);
-    border-radius: 10px;
-    box-shadow: 3px 3px 3px #2F4C49;
+    background-color: #9c92a3;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #000;
 }
 
 .project p {
     text-align: center;
     font-size:30px;
-    color:#5f9a93;
+    color:#fff;
+    font-family: 'Raleway', sans-serif;
 }
 .project img{
     width:300px;
+    margin-bottom: 10px;
 }
 
 .project:hover{
-    background-color: #2f4b48;
+    background-color: #34495E;
     box-shadow: 5px 5px 5px #2F4C49;
     zoom: 110%;
 }
 
 .project:hover p{
-    color:#9a5559;
+    color:#39D2B4;
 }
 
 li{
