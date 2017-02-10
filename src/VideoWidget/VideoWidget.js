@@ -203,16 +203,12 @@ class VideoWidget extends TUIOWidget {
      */
     onTagCreation(tuioTag) {
         super.onTagCreation(tuioTag);
-        if (this.isTouched(tuioTag.x, tuioTag.y) && tuioTag.id == "8D") {
-            this._socket.emit("removeMedia", this._project, this._url.replace(/^.*[\\\/]/, ''));
-            this._domElem.remove();
-            this._lastTagsValues = {
-                ...this._lastTagsValues,
-                [tuioTag.id]: {
-                    x: tuioTag.x,
-                    y: tuioTag.y,
-                },
-            };
+        if (this.isTouched(tuioTag.x, tuioTag.y)) {
+            if(tuioTag.id == "8D"){
+                this._socket.emit("removeMedia", this._project, this._url.replace(/^.*[\\\/]/, ''));
+                this._domElem.remove();
+            }
+
             if (tuioTag.id == "22"){
                 if (this._play==0){
                     this._play=1;
@@ -223,6 +219,14 @@ class VideoWidget extends TUIOWidget {
                     this._domElem.get(0).pause();
                 }
             }
+
+            this._lastTagsValues = {
+                ...this._lastTagsValues,
+                [tuioTag.id]: {
+                x: tuioTag.x,
+                    y: tuioTag.y,
+            },
+        };
         }
     }
 
@@ -256,9 +260,7 @@ class VideoWidget extends TUIOWidget {
         }
     }
     rotateResize(rotation, ratio){
-        this._domElem.css('transform', `scale(${ratio},${ratio}) rotate(${rotation}deg)`);
-        this._width = this._width*ratio;
-        this._height = this._height*ratio;
+        this._domElem.css('transform', `rotate(${rotation}deg)`);
     }
     resize(ratio){
         this._domElem.css('transform', `scale(${ratio},${ratio})`);
