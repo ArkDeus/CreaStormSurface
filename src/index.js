@@ -88,14 +88,14 @@ function loadProject(projectName) {
             var rotation = Math.floor(Math.random() * (360 + 1));
 
             if (images[i].type.startsWith("audio")) {
-                currentMediaWidget = new AudioWidget(left,top,200,100, "Projects/" + projectName+ "/" + images[i].url, images[i].tags, rotation,, socketIOClient, projectName, socketURL);
+                currentMediaWidget = new AudioWidget(left,top,200,100, "Projects/" + projectName+ "/" + images[i].url, images[i].tags, rotation, socketIOClient, projectName, socketURL);
             }
             if (images[i].type.startsWith("image")) {
                 currentMediaWidget = new ImageWidget(left,top,images[i].width*0.1,images[i].height*0.1, "Projects/" + projectName +"/"+  images[i].url, images[i].tags, rotation, socketIOClient, projectName, socketURL);
             }
             if (images[i].type.startsWith("video")) {
                 console.log(images[i])
-                currentMediaWidget = new VideoWidget(left,top,640,360, "Projects/" + projectName +"/"+ images[i].url, images[i].tags, rotation,, socketIOClient, projectName, socketURL);
+                currentMediaWidget = new VideoWidget(left,top,640,360, "Projects/" + projectName +"/"+ images[i].url, images[i].tags, rotation, socketIOClient, projectName, socketURL);
 
             }
 
