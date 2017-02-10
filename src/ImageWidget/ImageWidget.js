@@ -202,8 +202,8 @@ class ImageWidget extends TUIOWidget {
                 var x1 = (this._x-centerX)*Math.cos(rotation) - (this._y-centerY)*Math.sin(rotation) + centerX;
                 var y1 = (this._x-centerX)*Math.sin(rotation) + (this._y-centerY)*Math.cos(rotation) + centerY;
 
-				this._x = x1;
-				this._y = y1;
+				//this._x = x1;
+				//this._y = y1;
 
 
 
@@ -276,9 +276,10 @@ class ImageWidget extends TUIOWidget {
         }
     }
     rotateResize(rotation, ratio){
-		this._domElem.css('transform', `scale(${ratio},${ratio}) rotate(${rotation}deg)`);
-		this._width = this._width*ratio;
-		this._height = this._height*ratio;
+		this._domElem.css('transform', `rotate(${rotation}deg)`);
+		//scale(${ratio},${ratio})
+		//this._width = this._width*ratio;
+		//this._height = this._height*ratio;
     }
     resize(ratio){
         this._domElem.css('transform', `scale(${ratio},${ratio})`);
