@@ -30,7 +30,7 @@ class ImageWidget extends TUIOWidget {
      * @param {number} width - ImageWidget's width.
      * @param {number} height - ImageWidget's height.
      */
-    constructor(x, y, width, height, imgSrc, projectTags, angle) {
+    constructor(x, y, width, height, imgSrc, projectTags, angle, socket, project, socketUrl) {
         super(x, y, width, height);
 
         this._lastTouchesValues = {};
@@ -39,7 +39,7 @@ class ImageWidget extends TUIOWidget {
         this._projectTags = projectTags;
 
         this._domElem = $('<img>');
-        this._domElem.attr('src', imgSrc);
+        this._domElem.attr('src', socketUrl + imgSrc);
         this._domElem.css('width', `${width}px`);
         this._domElem.css('height', `${height}px`);
         this._domElem.css('position', 'absolute');
@@ -53,6 +53,11 @@ class ImageWidget extends TUIOWidget {
         this._initialDistance = 0;
 		this._angle = angle;
 		this._initialAngle = 0;
+
+		this._socket = socket;
+		this._project = project;
+        this._url = imgSrc;
+        this._socketUrl = socketUrl;
     }
 
     /**
@@ -197,6 +202,9 @@ class ImageWidget extends TUIOWidget {
     onTagCreation(tuioTag) {
         super.onTagCreation(tuioTag);
         if (this.isTouched(tuioTag.x, tuioTag.y)) {
+            this._socket.emit("removeMedia", this._project, this._url.replace(/^.*[\\\/]/, ''));
+            this._domElem.remove();
+            console.log(tuioTag.id);
             this._lastTagsValues = {
                 ...this._lastTagsValues,
                 [tuioTag.id]: {
