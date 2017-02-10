@@ -103,21 +103,22 @@ class TagListWidget extends TUIOWidget {
         super.onTagCreation(tuioTag);
         console.log(tuioTag.id);
         if (this.isTouched(tuioTag.x, tuioTag.y)) {
-            if(tuioTag.id == "6E"){
-                console.log(tuioTag.id);
-                this._lastTagsValues = {
-                    ...this._lastTagsValues,
-                    [tuioTag.id]
+            console.log(tuioTag.id);
+            this._lastTagsValues = {
+                ...this._lastTagsValues,
+                [tuioTag.id]
+        :
+            {
+                x: tuioTag.x,
+                    y
             :
-                {
-                    x: tuioTag.x,
-                        y
-                :
-                    tuioTag.y,
-                }
-            ,
+                tuioTag.y,
             }
-                ;
+        ,
+        }
+            ;
+            if(tuioTag.id == "6E"){
+
                 var x = tuioTag.x;
                 var y = tuioTag.y;
                 var angle = radToDeg(tuioTag.angle);
