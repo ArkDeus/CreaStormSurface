@@ -75,7 +75,7 @@ function displayImages(projectName) {
             var rotation = Math.floor(Math.random() * (360 + 1));
 
             if (images[i].type.startsWith("audio")) {
-                currentMediaWidget = new AudioWidget(left,top,200,50, "Projects/" + projectName+ "/" + images[i].url, images[i].tags, rotation);
+                currentMediaWidget = new AudioWidget(left,top,200,100, "Projects/" + projectName+ "/" + images[i].url, images[i].tags, rotation);
             }
             if (images[i].type.startsWith("image")) {
                 currentMediaWidget = new ImageWidget(left,top,images[i].width*0.1,images[i].height*0.1, "Projects/" + projectName +"/"+  images[i].url, images[i].tags, rotation, socketIOClient, projectName, socketURL);
@@ -87,6 +87,7 @@ function displayImages(projectName) {
             }
 
             $('#workbench').append(currentMediaWidget.domElem);
+            $('#workbench').append(currentMediaWidget.touchableZone);
 
             //workbench.innerHTML += "<img src='"+socketURL+"Projects/" + projectName + "/" + images[i] + "'/>";
         }

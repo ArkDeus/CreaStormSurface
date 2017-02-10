@@ -39,15 +39,32 @@ class AudioWidget extends TUIOWidget {
 
         this._projectTags = projectTags;
 
-        this._domElem = $('<audio>');
-        this._domElem.attr('src', imgSrc);
-        this._domElem.attr('controls', 'controls');
+        this._domElem = $('<div>');
+        this._domElem.css('word-wrap', 'break-word')
+        this._domElem.css('overflow', 'hidden');
+        this._domElem.css('text-overflow', 'ellipsis');
+        this._domElem.css('box-sizing', 'content-box');
         this._domElem.css('width', `${width}px`);
         this._domElem.css('height', `${height}px`);
         this._domElem.css('position', 'absolute');
         this._domElem.css('left', `${x}px`);
         this._domElem.css('top', `${y}px`);
+        this._domElem.css('background-color', `#9c92a3`);
+        this._domElem.css('box-shadow', `2px 2px 2px #000`);
         this._domElem.css('transform', `rotate(${angle}deg)`);
+
+        this._text = $('<p>');
+        this._text.css('max-width', `${width}px`);
+        this._text.css('height', `auto`);
+        this._text.css('padding', `10px`);
+        this._text.css('text-overflow', 'ellipsis');
+        this._text.html("&#9658; AUDIO FILE: " + imgSrc.replace(/^.*[\\\/]/, ''));
+
+        this._audio = $('<audio>');
+        this._audio.attr('src', imgSrc);
+
+        this._domElem.append(this._audio);
+        this._domElem.append(this._text);
 
         this._touchNb = 0;
         this._lastTouchValue = {};
