@@ -99,7 +99,9 @@ class TagListWidget extends TUIOWidget {
      * @param {TUIOTag} tuioTag - A TUIOTag instance.
      */
     onTagCreation(tuioTag) {
+
         super.onTagCreation(tuioTag);
+        console.log(tuioTag.id);
         if (this.isTouched(tuioTag.x, tuioTag.y)) {
             if(tuioTag.id == "6E"){
                 console.log(tuioTag.id);
