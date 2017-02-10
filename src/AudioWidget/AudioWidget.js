@@ -226,11 +226,11 @@ class AudioWidget extends TUIOWidget {
             if (tuioTag.id == "22"){
                 if (this._play==0){
                     this._play=1;
-                    this._domElem.get(0).play();
+                    this._audio.get(0).play();
                 }
                 else{
                     this._play=0;
-                    this._domElem.get(0).pause();
+                    this._audio.get(0).pause();
                 }
             }
         }
