@@ -58,15 +58,6 @@ class ImageWidget extends TUIOWidget {
 		this._project = project;
         this._url = imgSrc;
         this._socketUrl = socketUrl;
-
-        this._touchableZone = $('<div>');
-        this._touchableZone.css('width', `${width}px`);
-        this._touchableZone.css('height', `${height}px`);
-        this._touchableZone.css('position', 'absolute');
-        this._touchableZone.css('left', `${x}px`);
-        this._touchableZone.css('top', `${y}px`);
-        this._touchableZone.css('transform', `rotate(${angle}deg)`);
-        this._touchableZone.css('border', `1px solid black`);
     }
 
     /**
@@ -81,10 +72,6 @@ class ImageWidget extends TUIOWidget {
         return this._projectTags;
     }
 
-
-    get touchableZone(){
-        return this._touchableZone;
-    }
 
     /**
      * Call after a TUIOTouch creation.
@@ -199,11 +186,11 @@ class ImageWidget extends TUIOWidget {
 
                 var Ox = this._width/2
 
-                var x1 = (this._x-centerX)*Math.cos(this._angle) - (this._y-centerY)*Math.sin(this._angle) + centerX;
-                var y1 = (this._x-centerX)*Math.sin(this._angle) + (this._y-centerY)*Math.cos(this._angle) + centerY;
+                var x1 = (this._x-centerX)*Math.cos(rotation) - (this._y-centerY)*Math.sin(rotation) + centerX;
+                var y1 = (this._x-centerX)*Math.sin(rotation) + (this._y-centerY)*Math.cos(rotation) + centerY;
 
-				this._x = x1;
-				this._y = y1;
+				//this._x = x1;
+				//this._y = y1;
 
 
 
@@ -216,10 +203,6 @@ class ImageWidget extends TUIOWidget {
                     },
                 };
             }
-            this._touchableZone.css('width', `${this._width}px`);
-            this._touchableZone.css('height', `${this._height}px`);
-            this._touchableZone.css('left', `${this._x}px`);
-            this._touchableZone.css('top', `${this._y}px`);
         }
     }
 
@@ -231,10 +214,11 @@ class ImageWidget extends TUIOWidget {
      */
     onTagCreation(tuioTag) {
         super.onTagCreation(tuioTag);
-        if (this.isTouched(tuioTag.x, tuioTag.y)) {
+        if (this.isTouched(tuioTag.x, tuioTag.y) && tuioTag.id == "8D") {
             this._socket.emit("removeMedia", this._project, this._url.replace(/^.*[\\\/]/, ''));
             this._domElem.remove();
-            console.log(tuioTag.id);
+
+
             this._lastTagsValues = {
                 ...this._lastTagsValues,
                 [tuioTag.id]: {
@@ -275,9 +259,10 @@ class ImageWidget extends TUIOWidget {
         }
     }
     rotateResize(rotation, ratio){
-		this._domElem.css('transform', `scale(${ratio},${ratio}) rotate(${rotation}deg)`);
-		this._width = this._width*ratio;
-		this._height = this._height*ratio;
+		this._domElem.css('transform', `rotate(${rotation}deg)`);
+		//scale(${ratio},${ratio})
+		//this._width = this._width*ratio;
+		//this._height = this._height*ratio;
     }
     resize(ratio){
         this._domElem.css('transform', `scale(${ratio},${ratio})`);

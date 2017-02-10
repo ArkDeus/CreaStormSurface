@@ -215,7 +215,9 @@ class AudioWidget extends TUIOWidget {
      */
     onTagCreation(tuioTag) {
         super.onTagCreation(tuioTag);
-        if (this.isTouched(tuioTag.x, tuioTag.y)) {
+        if (this.isTouched(tuioTag.x, tuioTag.y) && tuioTag.id == "8D") {
+            this._socket.emit("removeMedia", this._project, this._url.replace(/^.*[\\\/]/, ''));
+            this._domElem.remove();
             this._lastTagsValues = {
                 ...this._lastTagsValues,
                 [tuioTag.id]: {
