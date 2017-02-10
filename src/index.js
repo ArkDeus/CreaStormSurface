@@ -26,7 +26,7 @@ const tuioManager = new TUIOManager();
 tuioManager.start();
 
 /** App Code **/
-var socketURL = 'http://localhost:8080/';
+var socketURL = 'http://192.168.1.24:8080/';
 const socketIOClient = io(socketURL+'SurfaceService');
 var currentWidgets = [];
 const tagListWidget = new TagListWidget(0,0,1920,1080);
