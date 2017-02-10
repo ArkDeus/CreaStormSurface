@@ -31,7 +31,7 @@ class VideoWidget extends TUIOWidget {
      * @param {number} width - ImageWidget's width.
      * @param {number} height - ImageWidget's height.
      */
-    constructor(x, y, width, height, imgSrc, projectTags, angle) {
+    constructor(x, y, width, height, imgSrc, projectTags, angle, socket, project, socketUrl) {
         super(x, y, width, height);
 
         this._lastTouchesValues = {};
@@ -48,6 +48,11 @@ class VideoWidget extends TUIOWidget {
         this._domElem.css('left', `${x}px`);
         this._domElem.css('top', `${y}px`);
         this._domElem.css('transform', `rotate(${angle}deg)`);
+
+        this._socket = socket;
+        this._project = project;
+        this._url = imgSrc;
+        this._socketUrl = socketUrl;
 
         this._touchNb = 0;
         this._lastTouchValue = {};

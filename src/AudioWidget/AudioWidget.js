@@ -31,7 +31,7 @@ class AudioWidget extends TUIOWidget {
      * @param {number} width - ImageWidget's width.
      * @param {number} height - ImageWidget's height.
      */
-    constructor(x, y, width, height, imgSrc, projectTags, angle) {
+    constructor(x, y, width, height, imgSrc, projectTags, angle, socket, project, socketUrl) {
         super(x, y, width, height);
 
         this._lastTouchesValues = {};
@@ -72,6 +72,11 @@ class AudioWidget extends TUIOWidget {
         this._initialDistance = 0;
         this._angle = angle;
         this._initialAngle = 0;
+
+        this._socket = socket;
+        this._project = project;
+        this._url = imgSrc;
+        this._socketUrl = socketUrl;
 
         this._play=0;
     }
