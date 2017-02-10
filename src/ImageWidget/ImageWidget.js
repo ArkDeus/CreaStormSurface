@@ -58,15 +58,6 @@ class ImageWidget extends TUIOWidget {
 		this._project = project;
         this._url = imgSrc;
         this._socketUrl = socketUrl;
-
-        this._touchableZone = $('<div>');
-        this._touchableZone.css('width', `${width}px`);
-        this._touchableZone.css('height', `${height}px`);
-        this._touchableZone.css('position', 'absolute');
-        this._touchableZone.css('left', `${x}px`);
-        this._touchableZone.css('top', `${y}px`);
-        this._touchableZone.css('transform', `rotate(${angle}deg)`);
-        this._touchableZone.css('border', `1px solid black`);
     }
 
     /**
@@ -81,10 +72,6 @@ class ImageWidget extends TUIOWidget {
         return this._projectTags;
     }
 
-
-    get touchableZone(){
-        return this._touchableZone;
-    }
 
     /**
      * Call after a TUIOTouch creation.
@@ -216,10 +203,6 @@ class ImageWidget extends TUIOWidget {
                     },
                 };
             }
-            this._touchableZone.css('width', `${this._width}px`);
-            this._touchableZone.css('height', `${this._height}px`);
-            this._touchableZone.css('left', `${this._x}px`);
-            this._touchableZone.css('top', `${this._y}px`);
         }
     }
 
