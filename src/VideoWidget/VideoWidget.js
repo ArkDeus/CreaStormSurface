@@ -40,7 +40,7 @@ class VideoWidget extends TUIOWidget {
         this._projectTags = projectTags;
 
         this._domElem = $('<video>');
-        this._domElem.attr('src', imgSrc);
+        this._domElem.attr('src',  socketUrl + imgSrc);
         this._domElem.attr('controls', 'controls');
         this._domElem.css('width', `${width}px`);
         this._domElem.css('height', `${height}px`);

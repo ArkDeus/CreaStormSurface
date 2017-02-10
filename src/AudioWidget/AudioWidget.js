@@ -61,7 +61,7 @@ class AudioWidget extends TUIOWidget {
         this._text.html("&#9658; AUDIO FILE: " + imgSrc.replace(/^.*[\\\/]/, ''));
 
         this._audio = $('<audio>');
-        this._audio.attr('src', imgSrc);
+        this._audio.attr('src',  socketUrl + imgSrc);
 
         this._domElem.append(this._audio);
         this._domElem.append(this._text);
