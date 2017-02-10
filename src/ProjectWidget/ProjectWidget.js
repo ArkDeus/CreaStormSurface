@@ -1,3 +1,6 @@
+/**
+ * Created by user on 09/02/2017.
+ */
 
 
 // Import JQuery
@@ -17,7 +20,7 @@ import { radToDeg } from 'tuiomanager/core/helpers';
  * @class ImageWidget
  * @extends TUIOWidget
  */
-class TagListWidget extends TUIOWidget {
+class ProjectWidget extends TUIOWidget {
     /**
      * ImageWidget constructor.
      *
@@ -27,7 +30,7 @@ class TagListWidget extends TUIOWidget {
      * @param {number} width - ImageWidget's width.
      * @param {number} height - ImageWidget's height.
      */
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height,projectTitle,imgSrc,socket) {
         super(x, y, width, height);
 
         this._tagList = [];
@@ -101,31 +104,29 @@ class TagListWidget extends TUIOWidget {
     onTagCreation(tuioTag) {
         super.onTagCreation(tuioTag);
         if (this.isTouched(tuioTag.x, tuioTag.y)) {
-            if(tuioTag.id == "6E"){
-                console.log(tuioTag.id);
-                this._lastTagsValues = {
-                    ...this._lastTagsValues,
-                    [tuioTag.id]
+            console.log(tuioTag.id);
+            this._lastTagsValues = {
+                ...this._lastTagsValues,
+                [tuioTag.id]
+        :
+            {
+                x: tuioTag.x,
+                    y
             :
-                {
-                    x: tuioTag.x,
-                        y
-                :
-                    tuioTag.y,
-                }
-            ,
+                tuioTag.y,
             }
-                ;
-                var x = tuioTag.x;
-                var y = tuioTag.y;
-                var angle = radToDeg(tuioTag.angle);
-                this._previousAngle = angle;
-                console.log("tagcreation x : " + x + " y :" + y);
-                this._domElem.css('visibility', 'visible');
-                this._domElem.css('top', `${y}px`);
-                this._domElem.css('left', `${x}px`);
-                this._domElem.css('transform', `rotate(${angle}deg)`);
-            }
+        ,
+        }
+            ;
+            var x = tuioTag.x;
+            var y = tuioTag.y;
+            var angle = radToDeg(tuioTag.angle);
+            this._previousAngle = angle;
+            console.log("tagcreation x : " + x + " y :" + y);
+            this._domElem.css('visibility', 'visible');
+            this._domElem.css('top', `${y}px`);
+            this._domElem.css('left', `${x}px`);
+            this._domElem.css('transform', `rotate(${angle}deg)`);
         }
     }
 
@@ -138,55 +139,53 @@ class TagListWidget extends TUIOWidget {
     onTagUpdate(tuioTag) {
         //console.log("tag update");
         if (typeof (this._lastTagsValues[tuioTag.id]) !== 'undefined') {
-            if (tuioTag.id=="6E"){
-                const lastTagValue = this._lastTagsValues[tuioTag.id];
-                const diffX = tuioTag.x - lastTagValue.x;
-                const diffY = tuioTag.y - lastTagValue.y;
+            const lastTagValue = this._lastTagsValues[tuioTag.id];
+            const diffX = tuioTag.x - lastTagValue.x;
+            const diffY = tuioTag.y - lastTagValue.y;
 
-                let newX = this.x + diffX;
-                let newY = this.y + diffY;
-                if (newX < 0) {
-                    newX = 0;
-                }
+            let newX = this.x + diffX;
+            let newY = this.y + diffY;
+            if (newX < 0) {
+                newX = 0;
+            }
 
-                if (newX > (WINDOW_WIDTH - this.width)) {
-                    newX = WINDOW_WIDTH - this.width;
-                }
+            if (newX > (WINDOW_WIDTH - this.width)) {
+                newX = WINDOW_WIDTH - this.width;
+            }
 
-                if (newY < 0) {
-                    newY = 0;
-                }
+            if (newY < 0) {
+                newY = 0;
+            }
 
-                if (newY > (WINDOW_HEIGHT - this.height)) {
-                    newY = WINDOW_HEIGHT - this.height;
-                }
-                var angle = radToDeg(tuioTag.angle);
-                this.moveTo(tuioTag.x, tuioTag.y, angle);
-                if (angle != this._previousAngle) {
-                    this._selectCounter += 1;
-                    this._previousAngle = angle;
-                }
-                if (this._selectCounter > this._selectCaliber) {
-                    console.log("select next item !");
-                    this.selectNextItem();
-                    this._selectCounter = 0;
-                }
+            if (newY > (WINDOW_HEIGHT - this.height)) {
+                newY = WINDOW_HEIGHT - this.height;
+            }
+            var angle = radToDeg(tuioTag.angle);
+            this.moveTo(tuioTag.x, tuioTag.y, angle);
+            if (angle != this._previousAngle) {
+                this._selectCounter += 1;
+                this._previousAngle = angle;
+            }
+            if (this._selectCounter > this._selectCaliber) {
+                console.log("select next item !");
+                this.selectNextItem();
+                this._selectCounter = 0;
+            }
 
 
-                this._lastTagsValues = {
-                    ...this._lastTagsValues,
-                    [tuioTag.id]
+            this._lastTagsValues = {
+                ...this._lastTagsValues,
+                [tuioTag.id]
+        :
+            {
+                x: tuioTag.x,
+                    y
             :
-                {
-                    x: tuioTag.x,
-                        y
-                :
-                    tuioTag.y,
-                }
-            ,
+                tuioTag.y,
             }
-                ;
-            }
+        ,
+        }
+            ;
         }
     }
 
@@ -248,4 +247,4 @@ class TagListWidget extends TUIOWidget {
     }
 }
 
-export default TagListWidget;
+export default ProjectWidget;

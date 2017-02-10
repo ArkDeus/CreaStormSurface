@@ -63,6 +63,10 @@ class ImageWidget extends TUIOWidget {
     get domElem() {
         return this._domElem;
     }
+    get tags(){
+        return this._projectTags;
+    }
+
 
     /**
      * Call after a TUIOTouch creation.
