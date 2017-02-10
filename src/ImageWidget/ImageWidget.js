@@ -199,8 +199,8 @@ class ImageWidget extends TUIOWidget {
 
                 var Ox = this._width/2
 
-                var x1 = (this._x-centerX)*Math.cos(this._angle) - (this._y-centerY)*Math.sin(this._angle) + centerX;
-                var y1 = (this._x-centerX)*Math.sin(this._angle) + (this._y-centerY)*Math.cos(this._angle) + centerY;
+                var x1 = (this._x-centerX)*Math.cos(rotation) - (this._y-centerY)*Math.sin(rotation) + centerX;
+                var y1 = (this._x-centerX)*Math.sin(rotation) + (this._y-centerY)*Math.cos(rotation) + centerY;
 
 				this._x = x1;
 				this._y = y1;
@@ -231,10 +231,11 @@ class ImageWidget extends TUIOWidget {
      */
     onTagCreation(tuioTag) {
         super.onTagCreation(tuioTag);
-        if (this.isTouched(tuioTag.x, tuioTag.y)) {
+        if (this.isTouched(tuioTag.x, tuioTag.y) && tuioTag.id == "8D") {
             this._socket.emit("removeMedia", this._project, this._url.replace(/^.*[\\\/]/, ''));
             this._domElem.remove();
-            console.log(tuioTag.id);
+
+
             this._lastTagsValues = {
                 ...this._lastTagsValues,
                 [tuioTag.id]: {
