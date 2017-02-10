@@ -52,9 +52,11 @@ h1{
 li{
     list-style: none;
     font-size:2em;
+    color: #5f9a93;
+
 }
 
 .selected{
-    color: #5f9a93;
-    background-color: #1b362f;
+    background-color: #5f9a93;
+    color: #1b362f;
 }

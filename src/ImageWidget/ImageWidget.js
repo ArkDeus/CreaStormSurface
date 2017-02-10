@@ -77,6 +77,10 @@ class ImageWidget extends TUIOWidget {
     get domElem() {
         return this._domElem;
     }
+    get tags(){
+        return this._projectTags;
+    }
+
 
     get touchableZone(){
         return this._touchableZone;

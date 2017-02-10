@@ -72,6 +72,8 @@ class AudioWidget extends TUIOWidget {
         this._initialDistance = 0;
         this._angle = angle;
         this._initialAngle = 0;
+
+        this._play=0;
     }
 
     /**
@@ -82,7 +84,9 @@ class AudioWidget extends TUIOWidget {
     get domElem() {
         return this._domElem;
     }
-
+    get tags(){
+        return this._projectTags;
+    }
     /**
      * Call after a TUIOTouch creation.
      *
@@ -219,6 +223,16 @@ class AudioWidget extends TUIOWidget {
                     y: tuioTag.y,
                 },
             };
+            if (tuioTag.id == "22"){
+                if (this._play==0){
+                    this._play=1;
+                    this._domElem.get(0).play();
+                }
+                else{
+                    this._play=0;
+                    this._domElem.get(0).pause();
+                }
+            }
         }
     }
 

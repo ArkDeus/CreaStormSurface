@@ -28,10 +28,12 @@ tuioManager.start();
 /** App Code **/
 var socketURL = 'http://localhost:8080/';
 const socketIOClient = io(socketURL+'SurfaceService');
+var currentWidgets = [];
+const tagListWidget = new TagListWidget(0,0,1920,1080);
+var _URL = window.URL || window.webkitURL;
+
 
 const buildApp = () => {
-  const tagListWidget = new TagListWidget(0,0,1920,1080);
-    $('body').append(tagListWidget.domElem);
     const imageWidget = new ImageWidget(0, 0, 250, 333, 'assets/IMG_20150304_201145.jpg');
     //$('body').append(imageWidget.domElem);
     var projects = document.getElementById("projectSelector");
@@ -46,8 +48,10 @@ const buildApp = () => {
       var clone = document.importNode(t.content, true);
       projects.appendChild(clone);
       var child = projects.querySelectorAll('div')[i];
-      child.setAttribute('onclick','displayImages(\"'+projectList[i][0]+'\")');
-      console.log(child);
+      child.setAttribute('onclick','loadProject(\"'+projectList[i][0]+'\")');
+        child.setAttribute('ontouch','loadProject(\"'+projectList[i][0]+'\")');
+
+        console.log(child);
     }
   });
 
@@ -59,17 +63,26 @@ $(window).ready(() => {
 });
 
 
-function displayImages(projectName) {
+function loadProject(projectName) {
     var projects = document.getElementById("projectSelector");
     projects.innerHTML = "";
+    var title = document.getElementById("title");
+    title.innerHTML=projectName + " Project";
     var workbench = document.getElementById("workbench");
     workbench.innerHTML = "";
     console.log(projectName);
+    socketIOClient.emit("getAllTags",projectName);
+    socketIOClient.on("returnAllTags",function(tags){
+       tagListWidget.tagList=tags;
+        $('body').append(tagListWidget.domElem);
+
+    });
     socketIOClient.emit("getImagesFromProject", projectName);
     socketIOClient.on("returnAllImages", function (images) {
         console.log(images[0]);
         var currentMediaWidget;
-        for (var i = 0; i < images.length; i++) {
+        for (var i = 0; i < images.length; i++){
+            console.log("image "+i+ " : "+images[i]);
             var top = Math.floor(Math.random() * (700 - 10 + 1)) + 10;
             var left = Math.floor(Math.random() * (1600 - 10 + 1)) + 10;
             var rotation = Math.floor(Math.random() * (360 + 1));
@@ -90,16 +103,24 @@ function displayImages(projectName) {
             $('#workbench').append(currentMediaWidget.touchableZone);
 
             //workbench.innerHTML += "<img src='"+socketURL+"Projects/" + projectName + "/" + images[i] + "'/>";
+            currentWidgets.push(currentMediaWidget);
+
         }
+        tagListWidget.widgetsList = currentWidgets;
+        console.log('taglistwidget widget list : '+tagListWidget.widgetsList);
+            //workbench.innerHTML += "<img src='"+socketURL+"Projects/" + projectName + "/" + images[i] + "'/>";
+        });
 /*        for (var i = 0; i < workbench.children.length; i++) {
             var image = workbench.children[i];
             image.style.position = "absolute";
+            var top = Math.floor(Math.random() * (1000 - 10 + 1-500)) + 10;
+            var left = Math.floor(Math.random() * (1900 - 10 + 1-500)) + 10;
+            var rotation = Math.floor(Math.random() * (360 + 1));
             image.style.top = top + "px";
             image.style.left = left + "px";
             image.style.transform = "rotate(" + rotation + "deg)";
             console.log(image);
         }*/
-    });
 }
 
-window.displayImages = displayImages;
+window.loadProject = loadProject;
